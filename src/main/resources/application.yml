@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    open-in-view: false
+    show-sql: true
+
+coindesk:
+  currency:
+    api:
+      url: https://api.coindesk.com/v1/bpi/currentprice.json
