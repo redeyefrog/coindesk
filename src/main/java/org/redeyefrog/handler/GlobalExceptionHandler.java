@@ -2,6 +2,7 @@ package org.redeyefrog.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.redeyefrog.constants.CoinDeskConstants;
 import org.redeyefrog.dto.CommonResponse;
 import org.redeyefrog.exception.CoinDeskRuntimeException;
 import org.springframework.validation.ObjectError;
@@ -29,7 +30,7 @@ public class GlobalExceptionHandler {
     public CommonResponse onException(Exception e) {
         log.error(e.getMessage(), e);
         return CommonResponse.builder()
-                             .resultDesc("System Error.")
+                             .resultDesc(CoinDeskConstants.ERROR)
                              .build();
     }
 

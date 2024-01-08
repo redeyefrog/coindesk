@@ -2,6 +2,7 @@ package org.redeyefrog.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.redeyefrog.constants.CoinDeskConstants;
 import org.redeyefrog.dto.CoinDeskTransferResponse;
 import org.redeyefrog.dto.CurrencyDto;
 import org.redeyefrog.dto.CurrencyQueryConditionRequest;
@@ -50,7 +51,7 @@ public class CoinDeskService {
 
         List<CurrencyEntity> currencyEntityList = currencyRepository.findAll(Example.of(builder.build(), matcher));
         return CurrencyQueryResultResponse.builder()
-                                          .resultDesc("SUCCESS")
+                                          .resultDesc(CoinDeskConstants.SUCCESS)
                                           .currencyList(currencyEntityList.stream()
                                                                           .map(currency -> CurrencyDto.builder()
                                                                                                       .currency(currency.getCurrency())
@@ -66,7 +67,7 @@ public class CoinDeskService {
                                    .currencyName(request.getCurrencyName())
                                    .build());
         return CurrencyResponse.builder()
-                               .resultDesc("SUCCESS")
+                               .resultDesc(CoinDeskConstants.SUCCESS)
                                .build();
     }
 
@@ -76,7 +77,7 @@ public class CoinDeskService {
                                                                    .currencyName(request.getCurrencyName())
                                                                    .build());
         return CurrencyResponse.builder()
-                               .resultDesc("SUCCESS")
+                               .resultDesc(CoinDeskConstants.SUCCESS)
                                .currency(CurrencyDto.builder()
                                                     .currency(currencyEntity.getCurrency())
                                                     .currencyName(currencyEntity.getCurrencyName())
@@ -87,7 +88,7 @@ public class CoinDeskService {
     public CurrencyResponse deleteCurrency(CurrencyRequest request) {
         currencyRepository.deleteById(request.getCurrency());
         return CurrencyResponse.builder()
-                               .resultDesc("SUCCESS")
+                               .resultDesc(CoinDeskConstants.SUCCESS)
                                .build();
     }
 
@@ -102,9 +103,9 @@ public class CoinDeskService {
         String updatedISO = coinDeskResponse.getTime().getUpdatedISO();
         return CoinDeskTransferResponse.builder()
                                        .updateTime(LocalDateTime.parse(coinDeskResponse.getTime().getUpdatedISO(), DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                                                                .atOffset(ZoneOffset.of(updatedISO.substring(updatedISO.indexOf("+"))))
+                                                                .atOffset(ZoneOffset.of(updatedISO.substring(updatedISO.indexOf(CoinDeskConstants.PLUS_SYMBOL))))
                                                                 .atZoneSameInstant(ZoneId.systemDefault())
-                                                                .format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))
+                                                                .format(DateTimeFormatter.ofPattern(CoinDeskConstants.DATETIME_PATTERN)))
                                        .currencyList(getCurrencyList(coinDeskResponse, currencyMap))
                                        .build();
     }
