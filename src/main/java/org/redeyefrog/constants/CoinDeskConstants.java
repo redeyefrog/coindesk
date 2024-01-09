@@ -12,6 +12,6 @@ public class CoinDeskConstants {
 
     public static final String DATETIME_PATTERN = "yyyy/MM/dd HH:mm:ss";
 
-    public static final String PLUS_SYMBOL = "yyyy/MM/dd HH:mm:ss";
+    public static final String PLUS_SYMBOL = "+";
 
 }
